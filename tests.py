@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import unicode_literals
 from unittest import TestCase, main
 
 from fields import IntegerField, CharField, EmailField, URLField, BooleanField, FloatField
@@ -13,6 +14,8 @@ class FieldsTest(TestCase):
         # data type
         c = CharField()
         self.assertRaises(ValidationError, c.validate, 100)
+        self.assertEqual(c.validate("你好"), "你好")
+        self.assertEqual(c.validate("1234"), "1234")
 
         # required
         c = CharField(required=True)

@@ -1,6 +1,11 @@
 # coding=utf-8
 import re
-from urlparse import urlunsplit, urlsplit
+import sys
+
+if sys.version > '3':
+    from urllib.parse import urlunsplit, urlsplit
+else:
+    from urlparse import urlunsplit, urlsplit
 
 from validator_exceptions import ValidationError
 
