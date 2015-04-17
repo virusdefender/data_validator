@@ -1,5 +1,5 @@
 # coding=utf-8
-from fields import Field, IntegerField, CharField, EmailField, URLField
+from fields import Field, IntegerField, CharField, EmailField, URLField, BooleanField
 from validator_exceptions import ValidationError
 
 

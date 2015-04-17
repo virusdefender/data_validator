@@ -1,6 +1,7 @@
 # coding=utf-8
 import re
 from urlparse import urlunsplit, urlsplit
+
 from validator_exceptions import ValidationError
 
 
@@ -147,3 +148,18 @@ class URLField(CharField):
         if not regex.search(url):
             raise ValidationError("URL format invalid")
         return value
+
+
+class BooleanField(Field):
+    def __init__(self, show_name=None, required=True):
+        self.show_name = show_name
+        self.required = required
+
+    def validate(self, value):
+        if value is None and self.required is False:
+            return None
+        mapping = {1: True, 0: False, "1": True, "0": False, "true": True, "false": False, True: True, False: False}
+        try:
+            return mapping[value]
+        except KeyError:
+            raise ValidationError("Value invalid")
