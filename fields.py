@@ -25,13 +25,13 @@ class CharField(Field):
     def validate(self, value):
         if value is None and self.required is False:
             return value
-        # python3
-        try:
-            if not isinstance(value, str):
-                raise ValidationError("Must be a string")
         # python2
-        except NameError:
+        try:
             if not isinstance(value, basestring):
+                raise ValidationError("Must be a string")
+        # python3
+        except NameError:
+            if not isinstance(value, str):
                 raise ValidationError("Must be a string")
 
         if self.max_length and len(value) > self.max_length:
