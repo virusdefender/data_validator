@@ -25,9 +25,12 @@ class CharField(Field):
     def validate(self, value):
         if value is None and self.required is False:
             return value
-
-        if not isinstance(value, basestring):
-            raise ValidationError("Must be a string")
+        if sys.version > '3':
+            if not isinstance(value, str):
+                raise ValidationError("Must be a string")
+        else:
+            if not isinstance(value, basestring):
+                raise ValidationError("Must be a string")
 
         if self.max_length and len(value) > self.max_length:
             raise ValidationError("Value is too long")
