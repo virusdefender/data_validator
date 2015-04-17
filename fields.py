@@ -25,10 +25,12 @@ class CharField(Field):
     def validate(self, value):
         if value is None and self.required is False:
             return value
-        if sys.version > '3':
+        # python3
+        try:
             if not isinstance(value, str):
                 raise ValidationError("Must be a string")
-        else:
+        # python2
+        except NameError:
             if not isinstance(value, basestring):
                 raise ValidationError("Must be a string")
 
