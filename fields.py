@@ -55,10 +55,10 @@ class IntegerField(NumberField):
         if not isinstance(value, int):
             raise ValidationError("Must be an integer")
 
-        if max is not None and value > self.max:
+        if self.max is not None and value > self.max:
             raise ValidationError("Value is too large")
 
-        if max is not None and value < self.min:
+        if self.min is not None and value < self.min:
             raise ValidationError("Value is too small")
 
         return value
@@ -72,13 +72,13 @@ class FloatField(NumberField):
         if value is None and self.required is False:
             return value
 
-        if not isinstance(value, FloatField):
+        if not isinstance(value, float):
             raise ValidationError("Must be a integer")
 
-        if max is not None and value > self.max:
+        if self.max is not None and value > self.max:
             raise ValidationError("Value is too large")
 
-        if max is not None and value < self.min:
+        if self.min is not None and value < self.min:
             raise ValidationError("Value is too small")
 
         return value
@@ -158,8 +158,9 @@ class BooleanField(Field):
     def validate(self, value):
         if value is None and self.required is False:
             return None
-        mapping = {1: True, 0: False, "1": True, "0": False, "true": True, "false": False, True: True, False: False}
+        mapping = {1: True, 0: False, "1": True, "0": False, "true": True, "false": False,
+                   "True": True, "False": False, True: True, False: False}
         try:
             return mapping[value]
-        except KeyError:
+        except Exception:
             raise ValidationError("Value invalid")
