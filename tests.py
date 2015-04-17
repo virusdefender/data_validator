@@ -1,11 +1,8 @@
 # coding=utf-8
-from unittest import TestCase
+from unittest import TestCase, main
 
-from fields import Field, IntegerField, CharField, EmailField, URLField, BooleanField, FloatField
+from fields import IntegerField, CharField, EmailField, URLField, BooleanField, FloatField
 from validator_exceptions import ValidationError
-
-import validators
-import validator_exceptions
 
 
 class FieldsTest(TestCase):
@@ -150,3 +147,7 @@ class FieldsTest(TestCase):
 
         for item in [2, "2", {}]:
             self.assertRaises(ValidationError, f.validate, item)
+
+
+if __name__ == '__main__':
+    main()
