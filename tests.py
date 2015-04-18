@@ -169,7 +169,7 @@ class ValidatorTest(TestCase):
                       "email": "xxxx@qq.com", "website": "https://virusdefender.net"}
         v = MyValidator(data=valid_data)
         self.assertEqual(v.is_validate(), True)
-        self.assertDictEqual(v.data, valid_data)
+        self.assertEqual(v.data, valid_data)
 
         invalid_data = {"username": "12333", "age": 10, "email": "234@"}
         v = MyValidator(data=invalid_data)
