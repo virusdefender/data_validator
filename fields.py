@@ -2,10 +2,7 @@
 import re
 import sys
 
-if sys.version > '3':
-    from urllib.parse import urlunsplit, urlsplit
-else:
-    from urlparse import urlunsplit, urlsplit
+from urlparse import urlunsplit, urlsplit
 
 from validator_exceptions import ValidationError
 
@@ -25,14 +22,9 @@ class CharField(Field):
     def validate(self, value):
         if value is None and self.required is False:
             return value
-        # python2
-        try:
-            if not isinstance(value, basestring):
-                raise ValidationError("Must be a string")
-        # python3
-        except NameError:
-            if not isinstance(value, str):
-                raise ValidationError("Must be a string")
+
+        if not isinstance(value, basestring):
+            raise ValidationError("Must be a string")
 
         if self.max_length and len(value) > self.max_length:
             raise ValidationError("Value is too long")
