@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 from unittest import TestCase, main
 
+import validators
+
 from fields import IntegerField, CharField, EmailField, URLField, BooleanField, FloatField
 from validator_exceptions import ValidationError
 
@@ -150,6 +152,28 @@ class FieldsTest(TestCase):
 
         for item in [2, "2", {}]:
             self.assertRaises(ValidationError, f.validate, item)
+
+
+class ValidatorTest(TestCase):
+    def setUp(self):
+        pass
+
+    def test_validate(self):
+        class MyValidator(validators.Validator):
+            username = validators.CharField(max_length=20, min_length=10)
+            age = validators.IntegerField(max=100, min=18)
+            email = validators.EmailField()
+            website = validators.URLField()
+
+        valid_data = {"username": "virusdefender", "age": 30,
+                      "email": "xxxx@qq.com", "website": "https://virusdefender.net"}
+        v = MyValidator(data=valid_data)
+        self.assertEqual(v.is_validate(), True)
+        self.assertDictEqual(v.data, valid_data)
+
+        invalid_data = {"username": "12333", "age": 10, "email": "234@"}
+        v = MyValidator(data=invalid_data)
+        self.assertEqual(v.is_validate(), False)
 
 
 if __name__ == '__main__':
