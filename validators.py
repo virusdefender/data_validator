@@ -48,7 +48,7 @@ class Validator(dict):
         for field_name, field_instance in self.mappings.iteritems():
             try:
                 self._validated_data[field_name] = field_instance.validate(self._get(field_name), **kwargs)
-            except ValidationError, e:
+            except ValidationError as e:
                 show_name = field_instance.show_name
                 if not show_name:
                     show_name = field_name
