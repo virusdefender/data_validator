@@ -52,7 +52,7 @@ class Validator(dict):
                 show_name = field_instance.show_name
                 if not show_name:
                     show_name = field_name
-                self.errors.append({"show_name": show_name, "message": e.message, "field_name": field_name})
+                self.errors.append({"show_name": show_name, "message": e, "field_name": field_name})
 
         if not self.errors:
             self._validated = True
